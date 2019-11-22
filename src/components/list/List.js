@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Group from '../group/Group'
 import './List.css'
+import { connect } from 'react-redux';
 
 class List extends Component {
     constructor (props) {
@@ -31,4 +32,22 @@ class List extends Component {
     }
 }
 
-export default List;
+const mapStateToProps = (state, props) => {
+    console.log('list key : ', props.data.index);
+    const data = state.lists[props.data.index];
+    if (data) {
+        return {
+            total: data.groups.reduce((acc,group) => acc+(group && group.students ? group.students.length : 0),0),
+            groups: data.groups,
+        };
+    }
+
+    return {};
+};
+
+const mapDispatchToProps = (dispatch, props) => {
+    return {
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(List);

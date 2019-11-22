@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './Group.css';
 import Student from '../student/Student';
+import { connect } from 'react-redux';
+import { changeTotalStudents, changeTotalList } from '../../redux/actions/actions';
 
 class Group extends Component {
     constructor (props) {
@@ -15,7 +17,10 @@ class Group extends Component {
         return dataComponent;
     }
     cancel () {
-        this.props.onChangeCounter(this.state.total);
+        // this.props.onChangeCounter(this.state.total);
+        // changeTotalStudents()
+        // this.props.actionEvent(-1);
+        this.props.actionEvent(this.state.total*-1);
         this.setState({cancel: true, teacher: '-', total: 0});
     }
     render () {
@@ -41,4 +46,20 @@ class Group extends Component {
     }
 }
 
-export default Group;
+const mapStateToProps = (state, props) => {
+    return state;
+};
+
+const mapDispatchToProps = (dispatch, props) => {
+    // this.actionEvent
+    // dispatch(changeTotalStudents(-1));
+    // const eventExecute = () => dispatch(changeTotalStudents(-1));
+    const eventExecute = change => dispatch(changeTotalStudents(change));
+
+    return {
+        // actionEvent: changeTotalStudents
+        actionEvent: eventExecute
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Group);
