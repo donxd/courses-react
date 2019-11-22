@@ -16,15 +16,31 @@ function processChangeLists (state, payload) {
 }
 
 function processChangeGroup (state, payload) {
+    // console.log('processChangeGroup @@@');
+    // console.log('processChangeGroup # state : ', JSON.stringify(state));
+    // console.log('processChangeGroup # payload : ', JSON.stringify(payload));
+    console.log('reducer - data list original ### ', state.lists[payload.idList])
+
     const changeLists = state.lists.map((val, index) => {
         if ((index+0) !== (payload.idList+0)) return val;
-        val.totalStudents+= payload.change;
+        val.totalStudents = (val.totalStudents ? val.totalStudents : getListTotalStudents(val))+payload.change;
+        // val.totalStudents+= val.totalStudents ? payload.change : getListTotalStudents(list);
         return val;
     });
 
+    console.log('reducer - data list change ### ', changeLists[payload.idList]);
+    // console.log('processChangeGroup # changeLists : ', JSON.stringify(payload));
+    // console.log('processChangeGroup # payload : ', JSON.stringify(payload));
+
+
     return {
-        totalStudents: state.totalStudents+payload.change,
+        // totalStudents: state.totalStudents+payload.change,
+        totalStudents: state.totalStudents,
         lists: changeLists,
+        // changeList: {
+        //     id: payload.idList,
+        //     change: payload.change,
+        // },
     };
 }
 

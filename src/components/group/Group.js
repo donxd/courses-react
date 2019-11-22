@@ -21,6 +21,7 @@ class Group extends Component {
         // changeTotalStudents()
         // this.props.actionEvent(-1);
         this.props.actionEvent(this.state.total*-1);
+        this.props.actionEventChangeList(this.state.idList, (this.state.total*-1));
         this.setState({cancel: true, teacher: '-', total: 0});
     }
     render () {
@@ -28,6 +29,7 @@ class Group extends Component {
             <div className={this.state.cancel?'canceled group':'group'}>
                 <div className="container">
                     <div> Group <button onClick={()=> this.cancel()}>click</button> # total : <span className="red">{this.state.total}</span> &nbsp; </div>
+                    <div> {this.state.idList } &nbsp; </div>
                     <div> Language : {this.state.language} </div>
                     <div> Level : {this.state.level} </div>
                     <div> Classroom : {this.state.classroom} </div>
@@ -55,10 +57,12 @@ const mapDispatchToProps = (dispatch, props) => {
     // dispatch(changeTotalStudents(-1));
     // const eventExecute = () => dispatch(changeTotalStudents(-1));
     const eventExecute = change => dispatch(changeTotalStudents(change));
+    const eventChangeList = (idList, change) => dispatch(changeTotalList(idList,change));
 
     return {
         // actionEvent: changeTotalStudents
-        actionEvent: eventExecute
+        actionEvent: eventExecute,
+        actionEventChangeList: eventChangeList,
     };
 };
 
