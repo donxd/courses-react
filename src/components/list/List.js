@@ -19,7 +19,6 @@ class List extends Component {
         this.props.onChangeCounter(reduce);
     }
     shouldComponentUpdate (nextProps, nextState) {
-        console.log('List ### shouldComponentUpdate : ', JSON.stringify(nextProps), ' ### ', JSON.stringify(nextState));
         nextState.total = nextProps.total;
         return true;
     }
@@ -39,18 +38,9 @@ class List extends Component {
 }
 
 const mapStateToProps = (state, props) => {
-    // if (state.changeList) {
-    //     console.log('change on list detected');
-    // }
-    // console.log('list key : ', props.data.index);
     const data = state.lists[props.data.index];
-    // console.log(' list key : ', this.props.data.index, ' // ', props.data.index);
     if (data) {
-        // console.log('list key #1: ', props.data.index);
-        // console.log('list key #2: ', JSON.stringify(data));
-        // console.log('list key #3: ', JSON.stringify(props));
         return {
-            // total: data.groups.reduce((acc,group) => acc+(group && group.students ? group.students.length : 0),0),
             total: getListTotalStudents(data, props),
             groups: data.groups,
         };
